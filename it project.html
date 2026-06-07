@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Our Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0a0a0f;
+    --surface:#13131a;
+    --card:#1a1a26;
+    --accent:#7c6af7;
+    --accent2:#f06292;
+    --accent3:#43e8b0;
+    --text:#f0f0f8;
+    --muted:#888;
+    --border:rgba(255,255,255,0.07);
+  }
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;}
+
+  .bg-glow{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+  .glow-1{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(124,106,247,0.15) 0%,transparent 70%);top:-200px;right:-100px;animation:float1 8s ease-in-out infinite;}
+  .glow-2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(240,98,146,0.12) 0%,transparent 70%);bottom:100px;left:-100px;animation:float2 10s ease-in-out infinite;}
+  @keyframes float1{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(40px) scale(1.05);}}
+  @keyframes float2{0%,100%{transform:translateY(0);}50%{transform:translateY(-30px);}}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 60px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  nav ul{list-style:none;display:flex;gap:32px;}
+  nav a{color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s;}
+  nav a:hover{color:var(--text);}
+
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 40px 60px;position:relative;z-index:1;}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(124,106,247,0.1);border:1px solid rgba(124,106,247,0.3);border-radius:50px;padding:6px 16px;font-size:13px;color:var(--accent);margin-bottom:32px;animation:fadeUp 0.6s ease both;}
+  .badge-dot{width:7px;height:7px;border-radius:50%;background:var(--accent3);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  h1{font-family:'Syne',sans-serif;font-size:clamp(42px,7vw,90px);font-weight:800;line-height:1.05;margin-bottom:24px;animation:fadeUp 0.6s 0.1s ease both;}
+  .gradient-text{background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 50%,var(--accent3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200%;animation:shimmer 4s linear infinite;}
+  @keyframes shimmer{0%{background-position:0%;}100%{background-position:200%;}}
+  .hero-sub{font-size:18px;color:var(--muted);max-width:520px;line-height:1.7;margin:0 auto 40px;animation:fadeUp 0.6s 0.2s ease both;}
+  .hero-btns{display:flex;gap:16px;justify-content:center;animation:fadeUp 0.6s 0.3s ease both;}
+  .btn-primary{background:var(--accent);color:#fff;padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:600;font-size:15px;transition:transform 0.2s,box-shadow 0.2s;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(124,106,247,0.4);}
+  .btn-outline{border:1px solid var(--border);color:var(--text);padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:500;font-size:15px;transition:all 0.2s;}
+  .btn-outline:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+  .stats{display:flex;gap:0;justify-content:center;margin-top:70px;animation:fadeUp 0.6s 0.4s ease both;}
+  .stat{text-align:center;padding:0 40px;border-right:1px solid var(--border);}
+  .stat:last-child{border:none;}
+  .stat-num{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--text);}
+  .stat-label{font-size:13px;color:var(--muted);margin-top:4px;}
+
+  section{padding:100px 60px;position:relative;z-index:1;max-width:1100px;margin:0 auto;}
+  .section-tag{font-size:13px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;}
+  .section-title{font-family:'Syne',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:800;margin-bottom:16px;}
+  .section-sub{color:var(--muted);font-size:16px;max-width:480px;line-height:1.7;}
+
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:48px;}
+  .skill-chip{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;font-size:14px;font-weight:500;transition:all 0.2s;cursor:default;}
+  .skill-chip:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 24px rgba(124,106,247,0.2);}
+  .skill-icon{font-size:24px;margin-bottom:8px;}
+
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:48px;}
+  .project-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;transition:all 0.3s;position:relative;overflow:hidden;}
+  .project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity 0.3s;}
+  .project-card:hover::before{opacity:1;}
+  .project-card.p1::before{background:linear-gradient(90deg,var(--accent),var(--accent2));}
+  .project-card.p2::before{background:linear-gradient(90deg,var(--accent2),var(--accent3));}
+  .project-card.p3::before{background:linear-gradient(90deg,var(--accent3),var(--accent));}
+  .project-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,0.12);box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+  .project-emoji{font-size:32px;margin-bottom:16px;}
+  .project-card h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;}
+  .project-card p{color:var(--muted);font-size:14px;line-height:1.7;}
+  .project-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+  .tag{font-size:12px;padding:4px 12px;border-radius:50px;background:rgba(124,106,247,0.1);border:1px solid rgba(124,106,247,0.2);color:var(--accent);}
+
+  .contact-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:60px;text-align:center;margin-top:48px;position:relative;overflow:hidden;}
+  .contact-box::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(124,106,247,0.08),transparent 60%);pointer-events:none;}
+  .contact-box h2{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;margin-bottom:12px;}
+  .contact-box p{color:var(--muted);margin-bottom:32px;font-size:16px;}
+  .contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .contact-link{display:flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:var(--text);font-size:14px;font-weight:500;transition:all 0.2s;}
+  .contact-link:hover{border-color:var(--accent);background:rgba(124,106,247,0.08);}
+
+  .cursor{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s;mix-blend-mode:screen;}
+  .cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(124,106,247,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.12s ease;}
+
+  footer{text-align:center;padding:40px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+</head>
+<body>
+
+<div class="bg-glow"><div class="glow-1"></div><div class="glow-2"></div></div>
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<nav>
+  <div class="logo">GROUP.DEV</div>
+  <ul>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div>
+    <div class="hero-badge"><span class="badge-dot"></span> Student Developers</div>
+    <h1>We Build <span class="gradient-text">Cool Things</span><br>With Code.</h1>
+    <p class="hero-sub">A group of students passionate about creating beautiful websites and solving real problems with code.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">See Our Work</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num" data-count="12">0</div><div class="stat-label">Projects Built</div></div>
+      <div class="stat"><div class="stat-num" data-count="5">0</div><div class="stat-label">Languages</div></div>
+      <div class="stat"><div class="stat-num" data-count="100">0</div><div class="stat-label">% Passion</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="skills">
+  <div class="section-tag">What We Know</div>
+  <div class="section-title">Our Skills</div>
+  <p class="section-sub">Technologies and tools we've been learning and using to build projects.</p>
+  <div class="skills-grid">
+    <div class="skill-chip"><div class="skill-icon">🌐</div>HTML</div>
+    <div class="skill-chip"><div class="skill-icon">🎨</div>CSS</div>
+    <div class="skill-chip"><div class="skill-icon">⚡</div>JavaScript</div>
+    <div class="skill-chip"><div class="skill-icon">🐍</div>Python</div>
+    <div class="skill-chip"><div class="skill-icon">📱</div>Responsive</div>
+    <div class="skill-chip"><div class="skill-icon">🗄️</div>SQL</div>
+    <div class="skill-chip"><div class="skill-icon">🔧</div>Git</div>
+    <div class="skill-chip"><div class="skill-icon">⚛️</div>React</div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-tag">What We've Built</div>
+  <div class="section-title">Projects</div>
+  <p class="section-sub">A selection of things we've worked on. Each one taught us something new.</p>
+  <div class="projects-grid">
+    <div class="project-card p1">
+      <div class="project-emoji">🛒</div>
+      <h3>Shop Dashboard</h3>
+      <p>A full responsive e-commerce dashboard with product listings, cart, and order tracking functionality.</p>
+      <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+    </div>
+    <div class="project-card p2">
+      <div class="project-emoji">🧠</div>
+      <h3>Quiz App</h3>
+      <p>Interactive quiz app with timer, score tracking, and randomized questions. Supports multiple categories.</p>
+      <div class="project-tags"><span class="tag">JavaScript</span><span class="tag">JSON</span></div>
+    </div>
+    <div class="project-card p3">
+      <div class="project-emoji">🌤️</div>
+      <h3>Weather App</h3>
+      <p>Real-time weather app that fetches live data by location with animated icons and 5-day forecasts.</p>
+      <div class="project-tags"><span class="tag">API</span><span class="tag">Fetch</span><span class="tag">CSS</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-box">
+    <h2>Let's Work Together 🚀</h2>
+    <p>Have a project in mind? We'd love to build something cool.</p>
+    <div class="contact-links">
+      <a href="mailto:group@example.com" class="contact-link">📧 Email Us</a>
+      <a href="#" class="contact-link">🐙 GitHub</a>
+      <a href="#" class="contact-link">💼 LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>Built with ❤️ and lots of code · © 2026</footer>
+
+<script>
+  const cur = document.getElementById('cur');
+  const ring = document.getElementById('ring');
+  document.addEventListener('mousemove', e => {
+    cur.style.left = e.clientX + 'px';
+    cur.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+  document.querySelectorAll('a,button,.skill-chip,.project-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cur.style.width = '20px'; cur.style.height = '20px';
+      ring.style.width = '50px'; ring.style.height = '50px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cur.style.width = '12px'; cur.style.height = '12px';
+      ring.style.width = '36px'; ring.style.height = '36px';
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('[data-count]').forEach(el => {
+          const target = +el.dataset.count;
+          let current = 0;
+          const inc = target / 50;
+          const t = setInterval(() => {
+            current = Math.min(current + inc, target);
+            el.textContent = Math.round(current) + (target === 100 ? '%' : '+');
+            if (current >= target) clearInterval(t);
+          }, 25);
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelector('.stats') && observer.observe(document.querySelector('.stats'));
+
+  document.querySelectorAll('nav a').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
